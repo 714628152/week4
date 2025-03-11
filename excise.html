@@ -1,45 +1,58 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Timetable Management</title>
-  <link rel="stylesheet" href="styles.css">
+    <!-- Set the character encoding to UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- Configure the viewport for responsive web design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Timetable Management</title>
+    <!-- Link an external stylesheet -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Friday Timetable Management</h1>
-  <form id="timetable-form">
-    <input type="text" id="subject" placeholder="Subject" required>
-    <input type="text" id="day" placeholder="Day" required>
-    <input type="time" id="time" required>
-
-    <input type="text" id="teacher" placeholder="Teacher" required>
-    <button type="submit">Add Class</button>
-  </form>
-  <ul id="timetable-list"></ul>
+    <!-- Main title of the page -->
+    <h1>Friday Timetable Management</h1>
+    <!-- Define a form for adding course information, with the form ID 'timetable-form' -->
+    <form id="timetable-form">
+        <input type="text" id="subject" placeholder="Subject" required>
+        <!-- Input field for entering the day of the course, with a placeholder and required attribute -->
+        <input type="text" id="day" placeholder="Day" required>
+        <!-- Time input field for selecting the course time, set as required -->
+        <input type="time" id="time" required>
+        <!-- Input field for entering the teacher's name, with a placeholder and required attribute -->
+        <input type="text" id="teacher" placeholder="Teacher" required>
+        <button type="submit">Add Class</button>
+    </form>
+    <!-- Unordered list for displaying the course schedule information, with the ID 'timetable-list' -->
+    <ul id="timetable-list"></ul>
   
-  <!-- New Button to Export Data -->
-  <button id="export-button">Export to MySQL</button>
+    <!-- New button for exporting the course schedule data to a MySQL database, with the ID 'export-button' -->
+    <button id="export-button">Export to MySQL</button>
 
   <script>
     const dbRequest = indexedDB.open('timetable', 1);
     let db;
 
-    dbRequest.onsuccess = (event) => {
-      db = event.target.result;
-      displayClasses();
-    };
+        dbRequest.onsuccess = (event) => {
+            // Get the database instance
+            db = event.target.result;
+            // Call the displayClasses function to show the course schedule information
+            displayClasses();
+        };
 
     dbRequest.onupgradeneeded = (event) => {
       const db = event.target.result;
       db.createObjectStore('timetable', { keyPath: 'id', autoIncrement: true });
     };
 
-    document.getElementById('timetable-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const subject = document.getElementById('subject').value;
-      const day = document.getElementById('day').value;
+        // Add an event listener to the form's submit event
+        document.getElementById('timetable-form').addEventListener('submit', (e) => {
+            // Prevent the default form submission behavior
+            e.preventDefault();
+            // Get the entered course name
+            const subject = document.getElementById('subject').value;
+            // Get the entered course day
+            const day = document.getElementById('day').value;
       const time = document.getElementById('time').value;
     
       const teacher = document.getElementById('teacher').value;
